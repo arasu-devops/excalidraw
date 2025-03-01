@@ -14,10 +14,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensure full git history for SonarQube
+          fetch-depth: 0  
 
       - name: Check AWS CLI Version
-        run: aws --version  # Ensure AWS CLI is installed
+        run: aws --version  
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
