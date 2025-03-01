@@ -9,12 +9,22 @@ jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensure a full clone for SonarQube analysis
+          fetch-depth: 0  # Ensure full git history for SonarQube
+
+      - name: Check AWS CLI Version
+        run: aws --version  # Ensure AWS CLI is installed
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
@@ -28,9 +38,4 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Trigger AWS CodePipeline
-        run: |
-          aws codepipeline start-pipeline-execution --name "CICD-pipeline-demo"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1  # Update this if your AWS region is different
+        run: aws codepipeline start-pipeline-execution --name "CICD-pipeline-demo" --region us-east-1
