@@ -38,4 +38,4 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Trigger AWS CodePipeline
-        run: aws codepipeline start-pipeline-execution --name "CICD-pipeline-demo" --region us-east-1
+        run: aws codepipeline start-pipeline-execution --name "SimpleDockerService" --region us-east-1
