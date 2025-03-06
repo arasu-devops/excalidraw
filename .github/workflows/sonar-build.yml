@@ -37,5 +37,3 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Trigger AWS CodePipeline
-        run: aws codepipeline start-pipeline-execution --name "SimpleDockerService" --region us-east-1
